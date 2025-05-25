@@ -3,6 +3,20 @@ import Link from "next/link";
 import { LatestPost } from "~/app/_components/post";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
+import Image from "next/image";
+
+
+const mockedImageUrls = [
+    "https://m9tlcpcmj6.ufs.sh/f/eq6y5b8McwQmtZj6edDolVJ0xOmQG31YLcN8djMFeyv6Skni",
+    "https://m9tlcpcmj6.ufs.sh/f/eq6y5b8McwQmmUYLBiInsjDo08cYM6REOepXtyJWU5ixBTbd",
+    "https://m9tlcpcmj6.ufs.sh/f/eq6y5b8McwQm0hZQO7a81gfTF3sVOjS9RJCAQ2mhUvY5zHKe",
+    "https://m9tlcpcmj6.ufs.sh/f/eq6y5b8McwQmjAPt0ebdqRSDtzQlkugPFMUE21m9jXwsVoIh",
+]
+
+const mockImages = mockedImageUrls.map((url, index) => ({
+    id: index + 1,
+    url
+}))
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -14,8 +28,17 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-       <h1>Hello - Gallery WIP</h1>
+      <main className="">
+          <div className="flex flex-wrap gap-4 m-4">{
+              [...mockImages,...mockImages,...mockImages].map((mockImage, index) => (
+                  <div key={index} className="w-48 m-4">
+                      {/*<Image key={mockImage.id} alt={"Mocked image"} src={mockImage.url} width={400} height={400}/>*/}
+                      <img src={mockImage.url} alt={"Mocked image"} />
+                  </div>
+              ))
+          }</div>
+       {/*<h1>Hello - Gallery WIP</h1>*/}
+
       </main>
     </HydrateClient>
   );
