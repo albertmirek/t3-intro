@@ -4,6 +4,7 @@ import { LatestPost } from "~/app/_components/post";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import Image from "next/image";
+import {db} from "~/server/db";
 
 
 const mockedImageUrls = [
@@ -19,16 +20,22 @@ const mockImages = mockedImageUrls.map((url, index) => ({
 }))
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await auth();
+  // const hello = await api.post.hello({ text: "from tRPC" });
+    const simplePosts = await db.postSimple.findMany()
+
+/*  const session = await auth();
 
   if (session?.user) {
     void api.post.getLatest.prefetch();
-  }
+  }*/
 
   return (
     <HydrateClient>
       <main className="">
+          <div>
+              <h3>Simple posts from db listing</h3>
+              {simplePosts.map((post) => (<span>{post.name}</span>))}
+          </div>
           <div className="flex flex-wrap gap-4 m-4">{
               [...mockImages,...mockImages,...mockImages].map((mockImage, index) => (
                   <div key={index} className="w-48 m-4">

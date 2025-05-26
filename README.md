@@ -19,7 +19,7 @@ Goal: Gallery app
 - [x] Make it deploy (vercel)
 - [x] Scaffold basic ui with mock data 
 - [x] Tidy up build process
-- [ ] Actually set up database (vercel postgress)
+- [x] Actually set up database (vercel postgress)
 - [ ] Attach database to UI 
 - [ ] Add authentication (w/ clerk)
 - [ ] Add image upload
