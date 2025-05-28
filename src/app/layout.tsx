@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import {auth, signIn, signOut} from "~/server/auth";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -16,11 +17,50 @@ const geist = Geist({
   variable: "--font-geist-sans",
 });
 
-function TopNav() {
+function SignIn() {
+    return (
+        <form
+            action={async () => {
+                "use server"
+                await signIn()
+            }}
+        >
+            <button type="submit">Sign in</button>
+        </form>
+    )
+}
+
+function SignOut() {
+    return (
+        <form
+            action={async () => {
+                "use server"
+                await signOut()
+            }}
+        >
+            <button type="submit">Sign Out</button>
+        </form>
+    )
+}
+
+function UserGreet(name: string| undefined | null) {
+    return(
+        <span>Hello {name}!</span>
+    )
+}
+
+async function TopNav() {
+
+    const session = await auth()
+    console.log("session", session)
+
   return(
       <nav className={"flex items-center justify-between w-full p-4 text-xl font-semibold border-b"}>
-        <div>Gallery</div>
-         <div>Sign in</div>
+        <span>Gallery</span>
+          {!!session?.user && UserGreet(session.user.name)}
+         <div>
+             {!!session?.user ? <SignOut/> : <SignIn/>}
+         </div>
       </nav>
   )
 }
