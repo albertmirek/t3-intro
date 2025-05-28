@@ -10,13 +10,12 @@ export default async function Home() {
       <main className="">
           <div className="flex flex-wrap gap-4 m-4">{
               images.map((image) => (
-                  <div key={image.id} className="w-48 m-4">
-                      <img src={image.url} alt={"Mocked image"} />
+                  <div key={image.id} className="w-48 m-4 flex flex-col">
+                      <img src={image.url} alt={image.name} />
+                      <div>{image.name}</div>
                   </div>
               ))
           }</div>
-       {/*<h1>Hello - Gallery WIP</h1>*/}
-
       </main>
     </HydrateClient>
   );
