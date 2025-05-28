@@ -1,11 +1,7 @@
-import Link from "next/link";
-
-import { LatestPost } from "~/app/_components/post";
-import { auth } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
-import Image from "next/image";
+import { HydrateClient } from "~/trpc/server";
 import {db} from "~/server/db";
 
+export const dynamic = "force-dynamic"
 
 const mockedImageUrls = [
     "https://m9tlcpcmj6.ufs.sh/f/eq6y5b8McwQmtZj6edDolVJ0xOmQG31YLcN8djMFeyv6Skni",
@@ -20,14 +16,7 @@ const mockImages = mockedImageUrls.map((url, index) => ({
 }))
 
 export default async function Home() {
-  // const hello = await api.post.hello({ text: "from tRPC" });
     const simplePosts = await db.postSimple.findMany()
-
-/*  const session = await auth();
-
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }*/
 
   return (
     <HydrateClient>
