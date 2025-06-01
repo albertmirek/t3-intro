@@ -1,9 +1,19 @@
 import { HydrateClient } from "~/trpc/server";
 import { db } from "~/server/db";
+import { auth } from "~/server/auth";
 
 export const dynamic = "force-dynamic";
 export default async function Home() {
-  const images = await db.image.findMany();
+  const session = await auth();
+
+  const images = session?.user.id ? await db.image.findMany({
+        where: {
+          userId: {
+            equals: session.user.id,
+          },
+        },
+    })
+    :[]
 
   return (
     <HydrateClient>
