@@ -1,0 +1,14 @@
+# Ignore artifacts:
+build
+coverage
+
+# 3rd Party Code
+node_modules
+
+# Generated
+.next
+.vercel
+
+# Misc
+.idea
+
