@@ -1,21 +1,21 @@
 import { HydrateClient } from "~/trpc/server";
-import {db} from "~/server/db";
+import { db } from "~/server/db";
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 export default async function Home() {
-    const images = await db.image.findMany()
+  const images = await db.image.findMany();
 
   return (
     <HydrateClient>
       <main className="">
-          <div className="flex flex-wrap gap-4 m-4">{
-              images.map((image) => (
-                  <div key={image.id} className="w-48 m-4 flex flex-col">
-                      <img src={image.url} alt={image.name} />
-                      <div>{image.name}</div>
-                  </div>
-              ))
-          }</div>
+        <div className="flex flex-wrap gap-4 m-4">
+          {images.map((image) => (
+            <div key={image.id} className="w-48 m-4 flex flex-col">
+              <img src={image.url} alt={image.name} />
+              <div>{image.name}</div>
+            </div>
+          ))}
+        </div>
       </main>
     </HydrateClient>
   );

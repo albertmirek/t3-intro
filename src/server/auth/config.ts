@@ -3,7 +3,7 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
 import { db } from "~/server/db";
-import GitHub from "next-auth/providers/github"
+import GitHub from "next-auth/providers/github";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -32,9 +32,7 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
-  providers: [
-  GitHub,
-  ],
+  providers: [GitHub],
   adapter: PrismaAdapter(db),
   callbacks: {
     session: ({ session, user }) => ({

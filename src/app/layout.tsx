@@ -1,11 +1,11 @@
 import "~/styles/globals.css";
-import "@uploadthing/react/styles.css"
+import "@uploadthing/react/styles.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import {auth, signIn, signOut} from "~/server/auth";
+import { auth, signIn, signOut } from "~/server/auth";
 import { ImageUploadButton } from "~/app/_components/uploadthing";
 
 export const metadata: Metadata = {
@@ -20,53 +20,53 @@ const geist = Geist({
 });
 
 function SignIn() {
-    return (
-        <form
-            action={async () => {
-                "use server"
-                await signIn()
-            }}
-        >
-            <button type="submit">Sign in</button>
-        </form>
-    )
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await signIn();
+      }}
+    >
+      <button type="submit">Sign in</button>
+    </form>
+  );
 }
 
 function SignOut() {
-    return (
-        <form
-            action={async () => {
-                "use server"
-                await signOut()
-            }}
-        >
-            <button type="submit">Sign Out</button>
-        </form>
-    )
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await signOut();
+      }}
+    >
+      <button type="submit">Sign Out</button>
+    </form>
+  );
 }
 
-function UserGreet(name: string| undefined | null) {
-    return(
-        <span>Hello {name}!</span>
-    )
+function UserGreet(name: string | undefined | null) {
+  return <span>Hello {name}!</span>;
 }
 
 async function TopNav() {
+  const session = await auth();
+  console.log("session", session);
 
-    const session = await auth()
-    console.log("session", session)
-
-  return(
-      <nav className={"flex items-center justify-between w-full p-4 text-xl font-semibold border-b"}>
-        <span>Gallery</span>
-          {!!session?.user && UserGreet(session.user.name)}
-         <div className={"flex"}>
-           {!!session?.user && <ImageUploadButton />}
-           {!!session?.user ? <SignOut/> : <SignIn/>}
-
-         </div>
-      </nav>
-  )
+  return (
+    <nav
+      className={
+        "flex items-center justify-between w-full p-4 text-xl font-semibold border-b"
+      }
+    >
+      <span>Gallery</span>
+      {!!session?.user && UserGreet(session.user.name)}
+      <div className={"flex"}>
+        {!!session?.user && <ImageUploadButton />}
+        {!!session?.user ? <SignOut /> : <SignIn />}
+      </div>
+    </nav>
+  );
 }
 
 export default function RootLayout({
@@ -75,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body className={` font-sans flex flex-col gap-4`}>
-        <TopNav/>
+        <TopNav />
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
     </html>

@@ -40,7 +40,7 @@ export const ourFileRouter = {
         data: {
           name: "",
           url: file.url,
-          userId: metadata.userId
+          userId: metadata.userId,
         },
       });
 
