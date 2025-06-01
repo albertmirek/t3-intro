@@ -1,10 +1,12 @@
 import "~/styles/globals.css";
+import "@uploadthing/react/styles.css"
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import {auth, signIn, signOut} from "~/server/auth";
+import { ImageUploadButton } from "~/app/_components/uploadthing";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -58,8 +60,10 @@ async function TopNav() {
       <nav className={"flex items-center justify-between w-full p-4 text-xl font-semibold border-b"}>
         <span>Gallery</span>
           {!!session?.user && UserGreet(session.user.name)}
-         <div>
-             {!!session?.user ? <SignOut/> : <SignIn/>}
+         <div className={"flex"}>
+           {!!session?.user && <ImageUploadButton />}
+           {!!session?.user ? <SignOut/> : <SignIn/>}
+
          </div>
       </nav>
   )
