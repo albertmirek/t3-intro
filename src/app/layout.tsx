@@ -19,7 +19,7 @@ const geist = Geist({
   variable: "--font-geist-sans",
 });
 
-function SignIn() {
+export function SignIn({ text = "Sign in" }) {
   return (
     <form
       action={async () => {
@@ -27,7 +27,7 @@ function SignIn() {
         await signIn();
       }}
     >
-      <button type="submit">Sign in</button>
+      <button type="submit">{text}</button>
     </form>
   );
 }
