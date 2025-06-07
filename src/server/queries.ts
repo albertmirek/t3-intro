@@ -26,8 +26,8 @@ export async function getMyImages() {
 }
 
 export async function getImage(id: number) {
-  const userId = (await auth())?.user.id;
-  if (!userId) {
+  const session = (await auth());
+  if (!session?.user.id) {
     throw new Error("Unauthorized");
   }
 
@@ -37,9 +37,12 @@ export async function getImage(id: number) {
     throw new Error("Image not found");
   }
 
-  if (image.userId !== userId) {
+  if (image.userId !== session.user.id) {
     throw new Error("Unauthorized");
   }
 
-  return image;
+  return {
+    image,
+    userName: session.user.name
+  };
 }
