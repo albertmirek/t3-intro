@@ -38,7 +38,7 @@ export const ourFileRouter = {
       // console.log("file url", file.ufsUrl);
       await db.image.create({
         data: {
-          name: "",
+          name: file.name,
           url: file.url,
           userId: metadata.userId,
         },
