@@ -73,14 +73,18 @@ async function TopNav() {
 
 export default function RootLayout({
   children,
-  modal
-}: Readonly<{ children: React.ReactNode, modal: React.ReactNode }>) {
+  modal,
+}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body className={` font-sans flex flex-col gap-4`}>
-        <TopNav />
         <TRPCReactProvider>
-          {children}
+          <div className={"h-screen grid grid-rows-[auto,1fr]"}>
+            <TopNav />
+            <main className={"overflow-y-scroll"}>
+              {children}
+            </main>
+          </div>
           {modal}
           <div id={"modal-root"} />
         </TRPCReactProvider>

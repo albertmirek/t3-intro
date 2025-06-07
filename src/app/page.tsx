@@ -14,8 +14,8 @@ export default async function Home() {
   return (
     <HydrateClient>
       <main className="">
-        <div className="flex flex-wrap justify-center gap-4 m-4">
-          {images.map((image) => (
+        <div className="flex flex-wrap justify-center gap-4 p-4">
+          {[...images,...images,...images,...images,...images].map((image) => (
             <div key={image.id} className="flex h-48 w-48 flex-col">
               <Link href={Routes.IMAGE_DETAIL(image.id)}>
                 <Image
