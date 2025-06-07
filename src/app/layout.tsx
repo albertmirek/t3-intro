@@ -7,6 +7,8 @@ import { Geist } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import { auth, signIn, signOut } from "~/server/auth";
 import { ImageUploadButton } from "~/app/_components/uploadthing";
+import Link from "next/link";
+import { Routes } from "~/consts/routes";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -59,7 +61,7 @@ async function TopNav() {
         "flex items-center justify-between w-full p-4 text-xl font-semibold border-b"
       }
     >
-      <span>Gallery</span>
+      <Link href={Routes.HOME}>Gallery</Link>
       {!!session?.user && UserGreet(session.user.name)}
       <div className={"flex"}>
         {!!session?.user && <ImageUploadButton />}
@@ -71,12 +73,17 @@ async function TopNav() {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  modal
+}: Readonly<{ children: React.ReactNode, modal: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body className={` font-sans flex flex-col gap-4`}>
         <TopNav />
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          {children}
+          {modal}
+          <div id={"modal-root"} />
+        </TRPCReactProvider>
       </body>
     </html>
   );

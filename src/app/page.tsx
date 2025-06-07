@@ -3,29 +3,32 @@ import { auth } from "~/server/auth";
 import { getMyImages } from "~/server/queries";
 import { SignIn } from "~/app/layout";
 import Image from "next/image";
+import React from "react";
+import Link from "next/link";
+import { Routes } from "~/consts/routes";
 
 export const dynamic = "force-dynamic";
 export default async function Home() {
-  const session = await auth();
-
-  const images = session?.user.id
-    ? await getMyImages(session?.user.id)
-    : [];
+  const images = await getMyImages()
 
   return (
     <HydrateClient>
       <main className="">
         <div className="flex flex-wrap justify-center gap-4 m-4">
-          {session ? images.map((image) => (
-            <div key={image.id} className="w-48 m-4 flex flex-col">
-              {/*<img src={image.url} alt={image.name} />*/}
-              <Image src={image.url} alt={image.name} width={192} height={192}
-              />
+          {images.map((image) => (
+            <div key={image.id} className="flex h-48 w-48 flex-col">
+              <Link href={Routes.IMAGE_DETAIL(image.id)}>
+                <Image
+                  src={image.url}
+                  style={{ objectFit: "contain" }}
+                  width={192}
+                  height={192}
+                  alt={image.name}
+                />
+              </Link>
               <div>{image.name}</div>
             </div>
-          ))
-          : <SignIn text={"Please sign in"} />
-          }
+          ))}
         </div>
       </main>
     </HydrateClient>
