@@ -1,10 +1,13 @@
 import "server-only"
-import { auth } from "~/server/auth";
 import { db } from "~/server/db";
+import { auth } from "~/server/auth";
 
-export async function getMyImages(userId: string) {
-  /*const session = await auth()
-  if (!session?.user.id) return []*/
+export async function getMyImages() {
+
+  const userId = (await auth())?.user.id;
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
 
   const images = await db.image.findMany({
     where: {
@@ -20,4 +23,23 @@ export async function getMyImages(userId: string) {
   })
 
   return images
+}
+
+export async function getImage(id: number) {
+  const userId = (await auth())?.user.id;
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const image = await db.image.findFirst({where: {id: {equals: id}}})
+
+  if (!image) {
+    throw new Error("Image not found");
+  }
+
+  if (image.userId !== userId) {
+    throw new Error("Unauthorized");
+  }
+
+  return image;
 }
