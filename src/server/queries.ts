@@ -6,7 +6,8 @@ export async function getMyImages() {
 
   const userId = (await auth())?.user.id;
   if (!userId) {
-    throw new Error("Unauthorized");
+    // throw new Error("Unauthorized");
+    return []
   }
 
   const images = await db.image.findMany({
