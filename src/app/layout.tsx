@@ -9,6 +9,7 @@ import { auth, signIn, signOut } from "~/server/auth";
 import { ImageUploadButton } from "~/app/_components/uploadthing";
 import Link from "next/link";
 import { Routes } from "~/consts/routes";
+import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -88,6 +89,7 @@ export default function RootLayout({
           {modal}
           <div id={"modal-root"} />
         </TRPCReactProvider>
+        <Toaster />
       </body>
     </html>
   );
